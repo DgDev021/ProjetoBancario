@@ -1,4 +1,4 @@
-package DgDev021.com.github.ProjetoBancario;
+package DgDev021.com.github.ProjetoBancario.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,5 +43,15 @@ public class Persona {
   private LocalDate whenCreated;
 
   private LocalDate lastLogin;
+
+  private Conta conta;
+
+  private List<String> chavePix;
+
+  private ContaCorrente contaCorrente;
+
+  private ContaPoupanca poupanca;
+
+  //private tipoChave : TIPO_CHAVE;
 
 }
