@@ -4,7 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,22 +16,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Agencia {
+public class Deposit {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private List<Persona> clientes;
+  private BigDecimal totalDeposited;
 
-  private String endereco;
+  private LocalDateTime whenCrated;
 
-  private String numero;
-
-  private List<Funcionario> funcionarios;
-
-  private List<ContaCorrente> contaCorrente;
-
-  private List<ContaPoupanca> contaPoupanca;
+  private Account conta;
 
 }

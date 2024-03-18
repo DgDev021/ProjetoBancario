@@ -4,7 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDate;
+import jakarta.persistence.OneToMany;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,18 +16,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cheque {
+public class Loan {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String numero;
+  private Account conta;
 
-  private LocalDate whenCreated;
+  private Integer installments;
 
-  private ContaCorrente titular;
+  private BigDecimal totalPrice;
 
-  private Integer folhasEmitidas;
+  private BigDecimal remainDebit;
+
+  private BigDecimal interestRates;
 
 }

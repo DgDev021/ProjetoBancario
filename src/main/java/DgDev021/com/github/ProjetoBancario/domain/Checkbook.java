@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,18 +15,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transferencia {
+public class Checkbook {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private BigDecimal valor;
+  private String number;
 
-  private LocalDate whenCreated;
+  private Integer numberOfPages;
 
-  private Conta contaOrigem;
+  private CurrentAccount titular;
 
-  private Conta contaDestino;
+  private LocalDateTime whenCreated;
 
 }

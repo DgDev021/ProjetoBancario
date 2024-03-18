@@ -4,7 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.math.BigDecimal;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,20 +16,17 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Emprestimo {
+public class CurrentAccount extends Account {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private BigDecimal valorTotal;
+  @OneToMany(mappedBy = "currentAccount")
+  private List<Card> cards;
 
-  private BigDecimal taxaJuros;
+  private List<Loan> loans;
 
-  private Integer parcelas;
-
-  private ContaCorrente conta;
-
-  private BigDecimal debitoRestante;
+  private List<Checkbook> checkbooks;
 
 }

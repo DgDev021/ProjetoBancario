@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,28 +15,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cartao {
+public class Extract {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String numero;
+  private String message;
 
-  //private bandeira : BANDEIRA_CARTAO
+  private LocalDateTime whenCreated;
 
-  private ContaCorrente conta;
-
-  private BigDecimal limite;
-
-  private LocalDate validade;
-
-  private Integer cvv;
-
-  private BigDecimal debito;
-
-  private Boolean credito;
-
-  private Boolean compraOnline;
+  private Account account;
 
 }

@@ -1,13 +1,24 @@
 package DgDev021.com.github.ProjetoBancario.domain;
 
+import DgDev021.com.github.ProjetoBancario.domain.enums.TypeKey;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,27 +42,50 @@ public class Persona {
   @Email  //Faz a validação do tipo email (@ .com)
   private String email;
 
+  @JsonIgnore
   private String password;
+
+  @ManyToOne
+  @JoinColumn(name = "agency_id")
+  private Agency agency;
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "persona")
+  private List<SavingAccount> savinAccounts = new ArrayList<>();
+
+  @JsonIgnore
+  @OneToMany(mappedBy = "persona")
+  private List<CurrentAccount> currentAccounts = new ArrayList<>();
 
   @CPF  //Faz a validação matematica do CPF
   private String cpf;
 
-  private LocalDate birthDay;
+  private Integer typeKey;
 
+  @Column(length = 1)
   private Character gender;
 
-  private LocalDate whenCreated;
+  @JsonIgnore
+  @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+  private LocalDateTime lastLogin;
 
-  private LocalDate lastLogin;
+  @JsonIgnore
+  @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+  private LocalDateTime whenCreated;
 
-  private Conta conta;
+  @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+  private LocalDateTime birthDay;
 
-  private List<String> chavePix;
+  @ElementCollection
+  @CollectionTable(name = "PIX_KEYS")
+  private Set<String> pixKeys;
 
-  private ContaCorrente contaCorrente;
+  public TypeKey getTypeKey(){
+    return TypeKey.toEnum(this.typeKey);
+  }
 
-  private ContaPoupanca poupanca;
-
-  //private tipoChave : TIPO_CHAVE;
+  public void setTypeKey(TypeKey typeKey){
+    this.typeKey = typeKey.getCod();
+  }
 
 }
