@@ -2,6 +2,7 @@ package DgDev021.com.github.ProjetoBancario.domain;
 
 import DgDev021.com.github.ProjetoBancario.domain.enums.CardIdentification;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +23,7 @@ import org.hibernate.validator.constraints.Length;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Card {
+public class CreditCard {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +39,7 @@ public class Card {
   @Length(max = 3, min = 3)
   private Integer cvv;
 
+  @JsonIgnore
   private BigDecimal limit = new BigDecimal(0);
 
   private Boolean credit;
@@ -50,6 +52,10 @@ public class Card {
   private Boolean onlineShopping;
 
   private Integer identification;
+
+  @JsonIgnore
+  @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+  private LocalDateTime whenCreated;
 
   public CardIdentification getIdentification() {
     return CardIdentification.toEnum(this.identification);

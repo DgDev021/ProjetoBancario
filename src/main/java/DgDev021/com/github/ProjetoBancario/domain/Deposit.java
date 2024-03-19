@@ -1,10 +1,15 @@
 package DgDev021.com.github.ProjetoBancario.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,10 +27,15 @@ public class Deposit {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private BigDecimal totalDeposited;
+  @JsonIgnore
+  private BigDecimal totalDeposited = new BigDecimal(BigInteger.ZERO);
 
+  @JsonIgnore
+  @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
   private LocalDateTime whenCrated;
 
-  private Account conta;
+  @ManyToOne
+  @JoinColumn(name = "account_id")
+  private Account account;
 
 }
