@@ -15,7 +15,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,21 +25,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
-@Data     //Gera o Get, Set, Equals e HashCode
-@Builder  //Habilita a criação de um objeto staticamente
-@Entity   //Isso aqui define que é uma classe do banco de dados
-@NoArgsConstructor  //Cria um construtor vazio
-@AllArgsConstructor //Cria um construtor com todos parametros
+@Data
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Persona {
 
-  @Id //Define qual é a primary Key do banco de dados
-  @GeneratedValue(strategy = GenerationType.IDENTITY) //Define o tipo de gerador do PK
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "name", nullable = false) //Define o padrão para a coluna
+  @Column(name = "name", nullable = false)
   private String name;
 
-  @Email  //Faz a validação do tipo email (@ .com)
+  @Email
   private String email;
 
   @JsonIgnore
@@ -52,10 +51,13 @@ public class Persona {
 
   @JsonIgnore
   @OneToMany(mappedBy = "persona")
-  private List<Account> accounts = new ArrayList<>();
+  private List<CurrentAccount> currentAccounts = new ArrayList<>();
 
+  @JsonIgnore
+  @OneToMany(mappedBy = "persona")
+  private List<SavingAccount> savingAccounts = new ArrayList<>();
 
-  @CPF  //Faz a validação matematica do CPF
+  @CPF
   @NotNull
   private String cpf;
 
@@ -79,11 +81,11 @@ public class Persona {
   @CollectionTable(name = "PIX_KEYS")
   private Set<String> pixKeys;
 
-  public TypeKey getTypeKey(){
+  public TypeKey getTypeKey() {
     return TypeKey.toEnum(this.typeKey);
   }
 
-  public void setTypeKey(TypeKey typeKey){
+  public void setTypeKey(TypeKey typeKey) {
     this.typeKey = typeKey.getCod();
   }
 

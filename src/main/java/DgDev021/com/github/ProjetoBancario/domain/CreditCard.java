@@ -1,5 +1,6 @@
 package DgDev021.com.github.ProjetoBancario.domain;
 
+import DgDev021.com.github.ProjetoBancario.domain.enums.CardIdentification;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
