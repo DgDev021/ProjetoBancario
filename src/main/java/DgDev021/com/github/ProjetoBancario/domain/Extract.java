@@ -29,14 +29,17 @@ public class Extract {
   @NotNull
   private String message;
 
+  @ManyToOne
+  @JsonIgnore
+  @JoinColumn(name = "currentAccount_id")
+  private CurrentAccount currentAccount;
+
+  @ManyToOne
+  @JoinColumn(name = "savingAccount_id")
+  private SavingAccount savingAccount;
+
   @JsonIgnore
   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
   private LocalDateTime whenCreated;
-
-  @ManyToOne
-  @JsonIgnore
-  @JoinColumn(name = "account_id")
-  private Account account;
-
 
 }

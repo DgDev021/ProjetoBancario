@@ -1,8 +1,8 @@
 package DgDev021.com.github.ProjetoBancario.domain;
 
-import DgDev021.com.github.ProjetoBancario.domain.enums.CardIdentification;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,8 +19,8 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.Length;
 
 @Data
-@Builder
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreditCard {
@@ -34,17 +34,18 @@ public class CreditCard {
 
   @ManyToOne
   @JoinColumn(name = "currentAccount_id")
-  private CurrentAccount account;
+  private CurrentAccount currentAccount;
 
   @Length(max = 3, min = 3)
   private Integer cvv;
 
   @JsonIgnore
+  @Column(name = "credit_limit")
   private BigDecimal limit = new BigDecimal(0);
 
   private Boolean credit;
 
-  private BigDecimal blocked;
+  private Boolean blocked;
 
   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
   private LocalDateTime validity;
@@ -61,7 +62,7 @@ public class CreditCard {
     return CardIdentification.toEnum(this.identification);
   }
 
-  public void setIdentification(CardIdentification cardIdentification){
+  public void setIdentification(CardIdentification cardIdentification) {
     this.identification = cardIdentification.getCod();
   }
 

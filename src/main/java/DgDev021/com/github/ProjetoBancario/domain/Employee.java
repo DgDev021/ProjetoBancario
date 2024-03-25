@@ -4,14 +4,11 @@ import DgDev021.com.github.ProjetoBancario.domain.enums.FunctionEmployee;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,11 +19,11 @@ public class Employee extends Persona {
 
   private BigDecimal salary;
 
-  public Integer getFunction(){
+  public FunctionEmployee getFunction() {
     return FunctionEmployee.toEnum(this.function);
   }
 
-  public void setFunction(FunctionEmployee function){
+  public void setFunction(FunctionEmployee function) {
     this.function = function.getCod();
   }
 

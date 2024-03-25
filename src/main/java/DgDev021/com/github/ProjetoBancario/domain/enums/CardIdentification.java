@@ -17,10 +17,10 @@ public enum CardIdentification {
   private String descricao;
 
   public static CardIdentification toEnum(Integer cod) {
-  return EnumSet.allOf(CardIdentification.class).stream()
-      .filter(e -> e.getCod() == (cod))
-      .findFirst()
-      .orElseThrow(() -> new IllegalArgumentException("Invalid Id: " + cod));
+    return EnumSet.allOf(CardIdentification.class).stream()
+        .filter(e -> e.getCod() == (cod))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("Invalid Id: " + cod));
   }
 
 }

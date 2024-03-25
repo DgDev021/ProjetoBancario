@@ -9,19 +9,19 @@ import lombok.Getter;
 public enum FunctionEmployee {
 
   INTERN(0, "INTERN"),
-  RECEPICIONIST(1, "RECEPICIONIST"),
+  RECEPTIONIST(1, "RECEPTIONIST"),
   BANKER(2, "BANKER"),
-  SACURITY(3, "SACURITY"),
-  ANALIST(3, "ANALIST");
+  SECURITY(3, "SECURITY"),
+  ANALYST(4, "ANALYST");
 
   private int cod;
   private String descricao;
 
   public static FunctionEmployee toEnum(Integer cod) {
-  return EnumSet.allOf(FunctionEmployee.class).stream()
-      .filter(e -> e.getCod() == (cod))
-      .findFirst()
-      .orElseThrow(() -> new IllegalArgumentException("Invalid Id: " + cod));
+    return EnumSet.allOf(FunctionEmployee.class).stream()
+        .filter(e -> e.getCod() == (cod))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException("Invalid Id: " + cod));
   }
 
 }

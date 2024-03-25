@@ -16,10 +16,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
-@Builder
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Agency {
@@ -47,9 +48,12 @@ public class Agency {
   private Set<Employee> employees = new HashSet<>();
 
   @JsonIgnore
-  @OneToMany(mappedBy = "Agency")
-  private Set<Account> accounts = new HashSet<>();
+  @OneToMany(mappedBy = "agency")
+  private Set<CurrentAccount> currentAccounts = new HashSet<>();
 
+  @JsonIgnore
+  @OneToMany(mappedBy = "agency")
+  private Set<SavingAccount> savingAccounts = new HashSet<>();
 
 }
 

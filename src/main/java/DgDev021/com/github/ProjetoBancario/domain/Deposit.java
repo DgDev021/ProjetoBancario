@@ -17,25 +17,26 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Deposit {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @ManyToOne
+  @JsonIgnore
+  @JoinColumn(name = "currentAccount_id")
+  private CurrentAccount currentAccount;
+
   @JsonIgnore
   private BigDecimal totalDeposited = new BigDecimal(BigInteger.ZERO);
 
   @JsonIgnore
   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-  private LocalDateTime whenCrated;
-
-  @ManyToOne
-  @JoinColumn(name = "account_id")
-  private Account account;
+  private LocalDateTime whenCreated;
 
 }

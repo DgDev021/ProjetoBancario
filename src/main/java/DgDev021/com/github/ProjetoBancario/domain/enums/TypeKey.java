@@ -17,7 +17,7 @@ public enum TypeKey {
   private int cod;
   private String descricao;
 
-  public static TypeKey toEnum(Integer cod){
+  public static TypeKey toEnum(Integer cod) {
     return EnumSet.allOf(TypeKey.class).stream()
         .filter(e -> e.getCod() == (cod))
         .findFirst()

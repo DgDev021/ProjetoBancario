@@ -2,6 +2,7 @@ package DgDev021.com.github.ProjetoBancario.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,8 +17,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Withdraw {
@@ -26,14 +27,15 @@ public class Withdraw {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private BigDecimal value;
+  @Column(name = "withdraw_value")
+  private BigDecimal value = new BigDecimal(0);
 
   @JsonIgnore
   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-  private LocalDateTime whenCrated;
+  private LocalDateTime whenExecuted;
 
   @ManyToOne
   @JoinColumn(name = "currentAccount_id")
-  private CurrentAccount conta;
+  private CurrentAccount currentAccount;
 
 }

@@ -2,6 +2,7 @@ package DgDev021.com.github.ProjetoBancario.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,8 +17,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Transfer {
@@ -26,15 +27,12 @@ public class Transfer {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private BigDecimal value;
+  @Column(name = "transfer_value")
+  private BigDecimal value = new BigDecimal(0);
 
   @ManyToOne
   @JoinColumn(name = "currentAccount_id")
-  private CurrentAccount originAccount;
-
-  @ManyToOne
-  @JoinColumn(name = "account_id")
-  private Account destinyAccount;
+  private CurrentAccount destinyAccount;
 
   @JsonIgnore
   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
