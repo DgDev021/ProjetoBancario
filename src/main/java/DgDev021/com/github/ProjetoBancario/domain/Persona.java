@@ -16,6 +16,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -40,42 +41,46 @@ public class Persona {
   private String name;
 
   @Email
+  @NotNull
   private String email;
 
-  @JsonIgnore
+
   private String password;
 
   @ManyToOne
   @JoinColumn(name = "agency_id")
   private Agency agency;
 
-  @JsonIgnore
+
   @OneToMany(mappedBy = "persona")
   private List<CurrentAccount> currentAccounts = new ArrayList<>();
 
-  @JsonIgnore
+
   @OneToMany(mappedBy = "persona")
   private List<SavingAccount> savingAccounts = new ArrayList<>();
 
   @CPF
   @NotNull
+  @Column(unique = true)
   private String cpf;
 
   private Integer typeKey;
 
+  @NotNull
   @Column(length = 1)
   private Character gender;
 
-  @JsonIgnore
+
   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
   private LocalDateTime lastLogin;
 
-  @JsonIgnore
+
+  @Column(updatable = false)
   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
   private LocalDateTime whenCreated;
 
-  @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-  private LocalDateTime birthDay;
+  @JsonFormat(pattern = "dd/MM/yyyy")
+  private LocalDate birthDay;
 
   @ElementCollection
   @CollectionTable(name = "PIX_KEYS")
