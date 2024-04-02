@@ -1,10 +1,14 @@
 package DgDev021.com.github.ProjetoBancario.controller;
 
 import DgDev021.com.github.ProjetoBancario.domain.Persona;
+import DgDev021.com.github.ProjetoBancario.domain.dto.PersonaRequestDto;
+import DgDev021.com.github.ProjetoBancario.domain.dto.PersonaResponseDto;
 import DgDev021.com.github.ProjetoBancario.service.PersonaService;
 import jakarta.validation.Valid;
 import java.net.URI;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +25,14 @@ public class PersonaController {
   private PersonaService personaService;
 
   @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-  public ResponseEntity<Void> createPersona(@Valid @RequestBody Persona persona){
-    Persona savedPersona = personaService.createPersona(persona);
+  public ResponseEntity<Void> createPersona(@Valid @RequestBody Persona persona) {
+    Persona savedPersona = null;
+
+    try {
+      savedPersona = personaService.createPersona(persona);
+    } catch (DataIntegrityViolationException e) {
+      return ResponseEntity.badRequest().build();
+    }
 
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(savedPersona.getId()).toUri();
@@ -31,10 +41,32 @@ public class PersonaController {
   }
 
   @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-  public ResponseEntity<Persona> findPersona(@PathVariable Long id){
+  public ResponseEntity<Persona> findPersona(@PathVariable Long id) {
     Persona persona = personaService.findPersona(id);
 
     return ResponseEntity.ok().body(persona);
+  }
+
+  @RequestMapping(method = RequestMethod.GET)
+  public ResponseEntity<Object> findAllPersonas() {
+    Set<PersonaResponseDto> allPersonas = personaService.findAllPersonas();
+
+    return ResponseEntity.ok().body(allPersonas);
+  }
+
+  @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+  public ResponseEntity<PersonaResponseDto> updatePersona(@PathVariable Long id,
+      @RequestBody PersonaRequestDto personaDto) {
+    PersonaResponseDto responseDto = personaService.updatePersona(id, personaDto);
+
+    return ResponseEntity.ok().body(responseDto);
+  }
+
+  @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+  public ResponseEntity<Void> deletePersona(@PathVariable Long id) {
+    personaService.deletePersona(id);
+
+    return ResponseEntity.noContent().build();
   }
 
 }
